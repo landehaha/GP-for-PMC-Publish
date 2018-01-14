@@ -1,41 +1,10 @@
 clear;
 clc;
 % Generate the training set
-a = [0.1,0.9]; % size-108
+% a = [0.1,0.9]; % size-108
+X = xlsread('HttpTraining_samples108.xlsx');
 % a = [0.1,0.6,0.9]; % size-1125
-n = length(a);
-L = n^8;
-l = L;
-k = 1;
-X = zeros(L,8);
-for i = 1:8
-    l = l/n;
-    for j = 1:l
-        for ii = 1:n
-            X((n*(j-1)+ii-1)*k+1:(n*(j-1)+ii)*k,9-i) = a(ii);
-        end
-    end
-    k = k * n;
-end
-for i = 1:L
-    if X(i,1)+X(i,2)>1||X(i,3)+X(i,4)>1||X(i,5)+X(i,6)>1;
-        X(i,:)= 0;        
-    end
-end
-X(all(X==0,2),:)=[];
-f11 = @(x1,x2,y1,y2,z1,z2,w1,k1)((160*y2*x1-77*z1*y1-77*z2*y1+160*y1)/160);
-f12 = @(x1,x2,y1,y2,z1,z2,w1,k1)((-160*w1*y2*x1-160*w1*y2*x2+77*k1*z1*y1+160*y2*x1-77*z1*y1-77*z2*y1+160*w1*y2+160*y1)/160);
-f13 = @(x1,x2,y1,y2,z1,z2,w1,k1)((508*y1+385*y1*(1-z1-z2)+1000*x1*y2+1000*y2*(1-x1-x2)*w1)/1000);
-f14 = @(x1,x2,y1,y2,z1,z2,w1,k1)((-160*y2*x1-160*y2*x2+308*z1*y1+497*y1+320*y2)/160);
-f15 = @(x1,x2,y1,y2,z1,z2,w1,k1)((-640*y2*x1-640*y2*x2+539*z1*y1+640*y2)/16);
-L = length(X);
-for i = 1:L
-    X(i,9) = f11(X(i,1),X(i,2),X(i,3),X(i,4),X(i,5),X(i,6),X(i,7),X(i,8));
-    X(i,10) = f12(X(i,1),X(i,2),X(i,3),X(i,4),X(i,5),X(i,6),X(i,7),X(i,8));
-    X(i,11) = f13(X(i,1),X(i,2),X(i,3),X(i,4),X(i,5),X(i,6),X(i,7),X(i,8));
-    X(i,12) = f14(X(i,1),X(i,2),X(i,3),X(i,4),X(i,5),X(i,6),X(i,7),X(i,8));
-    X(i,13) = f15(X(i,1),X(i,2),X(i,3),X(i,4),X(i,5),X(i,6),X(i,7),X(i,8));
-end
+% X = xlsread('HttpTraining_samples1125.xlsx');
 % Define the Gaussian Process
 meanfunc = {@meanSum, {@meanLinear, @meanConst}}; hyp.mean = [0;0;0;0;0;0;0;0;0];
 covfunc = {@covMaternard, 5}; 
