@@ -1,7 +1,8 @@
 clear;
 clc;
 % Generate the training set
-a = [0.1,0.9];
+a = [0.1,0.9]; % size-108
+% a = [0.1,0.6,0.9]; % size-1125
 n = length(a);
 L = n^8;
 l = L;

@@ -1,7 +1,21 @@
 clear;
 clc;
+% In this experiment, the size of training sample is P*T, which can be modifed.
+% P = 0.1:0.2:0.9;
+% T = 0.1:0.5:6;
+% Above is size-60
+% P = 0.1:0.1:0.9;
+% T = 0.1:0.5:6;
+% Above is size-108
+% P = 0.1:0.1:0.9;
+% T = 0.1:0.4:6;
+% Above is size-135
+% P = 0.1:0.1:0.9;
+% T = 0.1:0.3:6;
+% Above is size-180
 P = 0.1:0.1:0.9;
 T = 0.1:0.2:6;
+% Above is size-270
 [P,T] = meshgrid(P,T);
 P = P(:);
 T = T(:);
