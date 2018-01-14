@@ -48,32 +48,14 @@ ell = 1; sf = 1; hyp.cov = log([ell;ell;sf]);
 [Test_y2, Test_cov2] = gp(hyp, @infGaussLik, meanfunc, covfunc, likfunc, Train_x, Train_y2, Test_x);
 Test_y(:,2) = exp(exp(Test_y2));
 ER = 1-(abs(Test_y-True_y)./abs(True_y));
-P = zeros(6,1);
-for i = 1:2
-    P(3*i-2) = length(find(ER(:,i)>0.99))/l;
-    P(3*i-1) = length(find(ER(:,i)>0.95))/l;
-    P(3*i) = length(find(ER(:,i)>0.90))/l;
-end
-disp(P);
+a = [P1, abs(Test_y(:,1)), True_y(:,1)];
+b = [P1, abs(Test_y(:,2)), True_y(:,2)];
+csvwrite('figure7.csv',a);
+csvwrite('figure8.csv',b);
 figure(1)
 hold on;
 plot(P1,abs(Test_y(:,1)),'--','LineWidth',1.2);
 plot(P1,True_y(:,1),'LineWidth',1.2);
-% box off;
-% axis([0 60000 0 0.08]);
-% set(gca,'xtick',0:1000:60000);
-% set(gca,'xticklabel',{'','1000','','','4000','','','7000','','','10000','',''...
-%     ,'13000','','','16000','','','19000','','','22000','','','25000','','','28000'...
-%     ,'','','31000','','','34000','','','37000','','','40000','','','43000','',''...
-%     ,'46000','','','49000','','','52000','','','55000','','','58000','',''});
-% xtl=get(gca,'XTickLabel');
-% set(gca,'ytick',0:0.01:0.08);
-% set(gca,'yticklabel',{'0','0.01','0.02','0.03','0.04','0.05','0.06','0.07','0.08'});
-% xt=get(gca,'XTick');
-% yt=get(gca,'YTick');
-% ytextp=(yt(1)-0.2*(yt(2)-yt(1)))*ones(1,length(xt));
-% text(xt,ytextp,xtl,'HorizontalAlignment','right','rotation',90);
-% set(gca,'xticklabel','');
 line([0.1 1],[0.05 0.05],'linestyle',':');
 line([0.62 0.62],[0 0.05],'linestyle',':');
 legend('Estimated value','Actual value','Threhold','Location','North','orientation','horizontal');
